@@ -1,8 +1,12 @@
-use iso_fortran_env, only : int32
+use iso_fortran_env, only : int32, real32, real64
 implicit none
 
-!integer(int32) :: x(1) = [int(z'ffff', kind=int32)]
 integer(int32), allocatable :: x(:), y(:)
+
+interface murmur3f
+  procedure murmur3f32
+  procedure murmur3f64
+end interface murmur3f
 
 ! Empty array
 allocate(x(0))
@@ -21,7 +25,33 @@ print*
 print '("[1,2,3,4]: ", z8)', murmur3([1, 2, 3, 4])
 print '("[4,3,2,1]: ", z8)', murmur3([4, 3, 2, 1])
 
+! Some dumb tests
+print *, murmur3([0]), murmur3f([0.0_4])
+print *, murmur3([0, 0]), murmur3f([0._8])
+
 contains
+
+function murmur3f32(key, seed) result(hash)
+  real(real32), intent(in) :: key(:)
+  integer(int32), intent(in), optional :: seed
+  integer(int32) :: hash
+
+  integer(int32) :: ikey(size(key))
+
+  hash = murmur3(transfer(key, ikey))
+end function murmur3f32
+
+
+function murmur3f64(key, seed) result(hash)
+  real(real64), intent(in) :: key(:)
+  integer(int32), intent(in), optional :: seed
+  integer(int32) :: hash
+
+  integer(int32) :: ikey(2 * size(key))
+
+  hash = murmur3(transfer(key, ikey))
+end function murmur3f64
+
 
 function murmur3(key, seed) result(hash)
   integer(int32), intent(in) :: key(:)
@@ -55,9 +85,11 @@ function murmur3(key, seed) result(hash)
     hash = 5 * hash + c3
   enddo
 
+  ! NOTE: We don't need to handle trailing bytes, since we are converting
+  ! floats to arrays of 32-byte integers.
+
   hash = ieor(hash, 4*size(key))
 
-  !call fmix32(h1)
   hash = ieor(hash, shiftr(hash, 16))
   hash = hash * c4
   hash = ieor(hash, shiftr(hash, 13))

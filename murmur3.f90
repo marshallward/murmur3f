@@ -1,9 +1,9 @@
-module murmur
+module murmur3
 
 use iso_fortran_env, only : int32, int64, real32, real64
 implicit none
 
-interface murmur3
+interface murmur
   procedure murmur3_i32
   procedure murmur3_i64
   procedure murmur3_r32
@@ -14,7 +14,7 @@ interface murmur3
   procedure murmur3_r64_2d
   procedure murmur3_r64_3d
   procedure murmur3_r64_4d
-end interface murmur3
+end interface murmur
 
 contains
 
@@ -70,7 +70,7 @@ function murmur3_i64(key, seed) result(hash)
 
   integer(int32) :: ikey(2*size(key))
 
-  hash = murmur3(transfer(key, ikey), seed=seed)
+  hash = murmur(transfer(key, ikey), seed=seed)
 end function murmur3_i64
 
 
@@ -81,7 +81,7 @@ function murmur3_r32(key, seed) result(hash)
 
   integer(int32) :: ikey(size(key))
 
-  hash = murmur3(transfer(key, ikey), seed=seed)
+  hash = murmur(transfer(key, ikey), seed=seed)
 end function murmur3_r32
 
 
@@ -92,7 +92,7 @@ function murmur3_r32_2d(key, seed) result(hash)
 
   integer(int32) :: ikey(size(key))
 
-  hash = murmur3(transfer(key, ikey), seed=seed)
+  hash = murmur(transfer(key, ikey), seed=seed)
 end function murmur3_r32_2d
 
 
@@ -103,7 +103,7 @@ function murmur3_r32_3d(key, seed) result(hash)
 
   integer(int32) :: ikey(size(key))
 
-  hash = murmur3(transfer(key, ikey), seed=seed)
+  hash = murmur(transfer(key, ikey), seed=seed)
 end function murmur3_r32_3d
 
 
@@ -114,7 +114,7 @@ function murmur3_r32_4d(key, seed) result(hash)
 
   integer(int32) :: ikey(size(key))
 
-  hash = murmur3(transfer(key, ikey), seed=seed)
+  hash = murmur(transfer(key, ikey), seed=seed)
 end function murmur3_r32_4d
 
 
@@ -125,7 +125,7 @@ function murmur3_r64(key, seed) result(hash)
 
   integer(int32) :: ikey(2*size(key))
 
-  hash = murmur3(transfer(key, ikey), seed=seed)
+  hash = murmur(transfer(key, ikey), seed=seed)
 end function murmur3_r64
 
 
@@ -136,7 +136,7 @@ function murmur3_r64_2d(key, seed) result(hash)
 
   integer(int32) :: ikey(2*size(key))
 
-  hash = murmur3(transfer(key, ikey), seed=seed)
+  hash = murmur(transfer(key, ikey), seed=seed)
 end function murmur3_r64_2d
 
 
@@ -147,7 +147,7 @@ function murmur3_r64_3d(key, seed) result(hash)
 
   integer(int32) :: ikey(2*size(key))
 
-  hash = murmur3(transfer(key, ikey), seed=seed)
+  hash = murmur(transfer(key, ikey), seed=seed)
 end function murmur3_r64_3d
 
 
@@ -158,7 +158,7 @@ function murmur3_r64_4d(key, seed) result(hash)
 
   integer(int32) :: ikey(2*size(key))
 
-  hash = murmur3(transfer(key, ikey), seed=seed)
+  hash = murmur(transfer(key, ikey), seed=seed)
 end function murmur3_r64_4d
 
-end module murmur
+end module murmur3

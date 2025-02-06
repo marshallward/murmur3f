@@ -45,12 +45,12 @@ subroutine test_empty_array
   integer(kind=int32) :: seed
 
   print *, murmur3(a_i32) == 0
-  !print *, murmur3(a_i64) == 0
+  print *, murmur3(a_i64) == 0
   print *, murmur3(a_r32) == 0
   print *, murmur3(a_r64) == 0
 
   print *, murmur3(a_i32) == 0
-  !print *, murmur3(a_i64) == 0
+  print *, murmur3(a_i64) == 0
   print *, murmur3(a_r32) == 0
   print *, murmur3(a_r64) == 0
 

@@ -1,37 +1,16 @@
 module murmur
 
-use iso_fortran_env, only : int32, real32, real64
+use iso_fortran_env, only : int32, int64, real32, real64
 implicit none
 
 interface murmur3
   procedure murmur3_i32
-  procedure murmur3_f32
-  procedure murmur3_f64
+  procedure murmur3_i64
+  procedure murmur3_r32
+  procedure murmur3_r64
 end interface murmur3
 
 contains
-
-function murmur3_f32(key, seed) result(hash)
-  real(real32), intent(in) :: key(:)
-  integer(int32), intent(in), optional :: seed
-  integer(int32) :: hash
-
-  integer(int32) :: ikey(size(key))
-
-  hash = murmur3(transfer(key, ikey), seed=seed)
-end function murmur3_f32
-
-
-function murmur3_f64(key, seed) result(hash)
-  real(real64), intent(in) :: key(:)
-  integer(int32), intent(in), optional :: seed
-  integer(int32) :: hash
-
-  integer(int32) :: ikey(2 * size(key))
-
-  hash = murmur3(transfer(key, ikey), seed=seed)
-end function murmur3_f64
-
 
 function murmur3_i32(key, seed) result(hash)
   integer(int32), intent(in) :: key(:)
@@ -76,5 +55,38 @@ function murmur3_i32(key, seed) result(hash)
   hash = hash * c5
   hash = ieor(hash, shiftr(hash, 16))
 end function murmur3_i32
+
+
+function murmur3_r32(key, seed) result(hash)
+  real(real32), intent(in) :: key(:)
+  integer(int32), intent(in), optional :: seed
+  integer(int32) :: hash
+
+  integer(int32) :: ikey(size(key))
+
+  hash = murmur3(transfer(key, ikey), seed=seed)
+end function murmur3_r32
+
+
+function murmur3_r64(key, seed) result(hash)
+  real(real64), intent(in) :: key(:)
+  integer(int32), intent(in), optional :: seed
+  integer(int32) :: hash
+
+  integer(int32) :: ikey(2 * size(key))
+
+  hash = murmur3(transfer(key, ikey), seed=seed)
+end function murmur3_r64
+
+
+function murmur3_i64(key, seed) result(hash)
+  integer(int64), intent(in) :: key(:)
+  integer(int32), intent(in), optional :: seed
+  integer(int32) :: hash
+
+  integer(int32) :: ikey(2 * size(key))
+
+  hash = murmur3(transfer(key, ikey), seed=seed)
+end function murmur3_i64
 
 end module murmur

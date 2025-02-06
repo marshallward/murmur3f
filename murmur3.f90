@@ -3,14 +3,15 @@ module murmur
 use iso_fortran_env, only : int32, real32, real64
 implicit none
 
-interface murmur3f
-  procedure murmur3f32
-  procedure murmur3f64
-end interface murmur3f
+interface murmur3
+  procedure murmur3_i32
+  procedure murmur3_f32
+  procedure murmur3_f64
+end interface murmur3
 
 contains
 
-function murmur3f32(key, seed) result(hash)
+function murmur3_f32(key, seed) result(hash)
   real(real32), intent(in) :: key(:)
   integer(int32), intent(in), optional :: seed
   integer(int32) :: hash
@@ -21,7 +22,7 @@ function murmur3f32(key, seed) result(hash)
 end function murmur3f32
 
 
-function murmur3f64(key, seed) result(hash)
+function murmur3_f64(key, seed) result(hash)
   real(real64), intent(in) :: key(:)
   integer(int32), intent(in), optional :: seed
   integer(int32) :: hash
@@ -32,7 +33,7 @@ function murmur3f64(key, seed) result(hash)
 end function murmur3f64
 
 
-function murmur3(key, seed) result(hash)
+function murmur3_i32(key, seed) result(hash)
   integer(int32), intent(in) :: key(:)
   integer(int32), intent(in), optional :: seed
   integer(int32) :: hash
@@ -74,6 +75,6 @@ function murmur3(key, seed) result(hash)
   hash = ieor(hash, shiftr(hash, 13))
   hash = hash * c5
   hash = ieor(hash, shiftr(hash, 16))
-end function murmur3
+end function murmur3i32
 
 end module murmur

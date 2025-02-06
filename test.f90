@@ -2,7 +2,7 @@ program murmur_test
 
 use, intrinsic :: iso_fortran_env, only : int32, real32, real64
 
-use murmur, only : murmur3, murmur3f
+use murmur, only : murmur3
 
 implicit none
 
@@ -26,7 +26,7 @@ print '("[1,2,3,4]: ", z8)', murmur3([1, 2, 3, 4])
 print '("[4,3,2,1]: ", z8)', murmur3([4, 3, 2, 1])
 
 ! Some dumb tests
-print *, murmur3([0]), murmur3f([0.0_4])
-print *, murmur3([0, 0]), murmur3f([0._8])
+print '(z8, 4x, z8)', murmur3([0]), murmur3([0._4])
+print '(z8, 4x, z8)', murmur3([0, 0]), murmur3([0._8])
 
 end program murmur_test

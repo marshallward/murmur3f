@@ -18,8 +18,8 @@ function murmur3_f32(key, seed) result(hash)
 
   integer(int32) :: ikey(size(key))
 
-  hash = murmur3(transfer(key, ikey))
-end function murmur3f32
+  hash = murmur3(transfer(key, ikey), seed=seed)
+end function murmur3_f32
 
 
 function murmur3_f64(key, seed) result(hash)
@@ -29,8 +29,8 @@ function murmur3_f64(key, seed) result(hash)
 
   integer(int32) :: ikey(2 * size(key))
 
-  hash = murmur3(transfer(key, ikey))
-end function murmur3f64
+  hash = murmur3(transfer(key, ikey), seed=seed)
+end function murmur3_f64
 
 
 function murmur3_i32(key, seed) result(hash)
@@ -75,6 +75,6 @@ function murmur3_i32(key, seed) result(hash)
   hash = ieor(hash, shiftr(hash, 13))
   hash = hash * c5
   hash = ieor(hash, shiftr(hash, 16))
-end function murmur3i32
+end function murmur3_i32
 
 end module murmur

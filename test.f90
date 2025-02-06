@@ -29,4 +29,38 @@ print '("[4,3,2,1]: ", z8)', murmur3([4, 3, 2, 1])
 print '(z8, 4x, z8)', murmur3([0]), murmur3([0._4])
 print '(z8, 4x, z8)', murmur3([0, 0]), murmur3([0._8])
 
+! Reform as unit tests?
+
+call test_empty_array
+
+contains
+
+subroutine test_empty_array
+  integer(kind=real32) :: a_i32(0)
+  integer(kind=real64) :: a_i64(0)
+  real(kind=real32) :: a_r32(0)
+  real(kind=real64) :: a_r64(0)
+
+  integer(kind=int32) :: hash
+  integer(kind=int32) :: seed
+
+  print *, murmur3(a_i32) == 0
+  !print *, murmur3(a_i64) == 0
+  print *, murmur3(a_r32) == 0
+  print *, murmur3(a_r64) == 0
+
+  print *, murmur3(a_i32) == 0
+  !print *, murmur3(a_i64) == 0
+  print *, murmur3(a_r32) == 0
+  print *, murmur3(a_r64) == 0
+
+  hash = murmur3(a_i32, seed=1)
+  print *, hash == int(z'514e28b7', kind=int32)
+
+  seed = int(z'ffffffff', kind=int32)
+  hash = murmur3(a_i32, seed=seed)
+  print *, hash == int(z'81f16f39', kind=int32)
+
+end subroutine test_empty_array
+
 end program murmur_test

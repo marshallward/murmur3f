@@ -1,6 +1,6 @@
 program murmur_test
 
-use, intrinsic :: iso_fortran_env, only : int32, real32, real64
+use, intrinsic :: iso_fortran_env, only : int32, int64, real32, real64
 
 use murmur, only : murmur3
 
@@ -36,31 +36,58 @@ call test_empty_array
 contains
 
 subroutine test_empty_array
-  integer(kind=real32) :: a_i32(0)
-  integer(kind=real64) :: a_i64(0)
-  real(kind=real32) :: a_r32(0)
-  real(kind=real64) :: a_r64(0)
+  integer(kind=int32) :: a_i32(0)
+  integer(kind=int64) :: a_i64(0)
+  real(kind=real32) :: a_r32_1d(0)
+  real(kind=real32) :: a_r32_2d(0,0)
+  real(kind=real32) :: a_r32_3d(0,0,0)
+  real(kind=real32) :: a_r32_4d(0,0,0,0)
+  real(kind=real64) :: a_r64_1d(0)
+  real(kind=real64) :: a_r64_2d(0,0)
+  real(kind=real64) :: a_r64_3d(0,0,0)
+  real(kind=real64) :: a_r64_4d(0,0,0,0)
 
   integer(kind=int32) :: hash
   integer(kind=int32) :: seed
 
-  print *, murmur3(a_i32) == 0
-  print *, murmur3(a_i64) == 0
-  print *, murmur3(a_r32) == 0
-  print *, murmur3(a_r64) == 0
+  ! Implicit seed = 0
+  hash = 0
+  print *, murmur3(a_i32) == hash
+  print *, murmur3(a_i64) == hash
+  print *, murmur3(a_r32_1d) == hash
+  print *, murmur3(a_r32_2d) == hash
+  print *, murmur3(a_r32_3d) == hash
+  print *, murmur3(a_r32_4d) == hash
+  print *, murmur3(a_r64_1d) == hash
+  print *, murmur3(a_r64_2d) == hash
+  print *, murmur3(a_r64_3d) == hash
+  print *, murmur3(a_r64_4d) == hash
 
-  print *, murmur3(a_i32) == 0
-  print *, murmur3(a_i64) == 0
-  print *, murmur3(a_r32) == 0
-  print *, murmur3(a_r64) == 0
-
-  hash = murmur3(a_i32, seed=1)
-  print *, hash == int(z'514e28b7', kind=int32)
+  seed = 1
+  hash = int(z'514e28b7', kind=int32)
+  print *, murmur3(a_i32, seed=seed) == hash
+  print *, murmur3(a_i64, seed=seed) == hash
+  print *, murmur3(a_r32_1d, seed=seed) == hash
+  print *, murmur3(a_r32_2d, seed=seed) == hash
+  print *, murmur3(a_r32_3d, seed=seed) == hash
+  print *, murmur3(a_r32_4d, seed=seed) == hash
+  print *, murmur3(a_r64_1d, seed=seed) == hash
+  print *, murmur3(a_r64_2d, seed=seed) == hash
+  print *, murmur3(a_r64_3d, seed=seed) == hash
+  print *, murmur3(a_r64_4d, seed=seed) == hash
 
   seed = int(z'ffffffff', kind=int32)
-  hash = murmur3(a_i32, seed=seed)
-  print *, hash == int(z'81f16f39', kind=int32)
-
+  hash = int(z'81f16f39', kind=int32)
+  print *, murmur3(a_i32, seed=seed) == hash
+  print *, murmur3(a_i64, seed=seed) == hash
+  print *, murmur3(a_r32_1d, seed=seed) == hash
+  print *, murmur3(a_r32_2d, seed=seed) == hash
+  print *, murmur3(a_r32_3d, seed=seed) == hash
+  print *, murmur3(a_r32_4d, seed=seed) == hash
+  print *, murmur3(a_r64_1d, seed=seed) == hash
+  print *, murmur3(a_r64_2d, seed=seed) == hash
+  print *, murmur3(a_r64_3d, seed=seed) == hash
+  print *, murmur3(a_r64_4d, seed=seed) == hash
 end subroutine test_empty_array
 
 end program murmur_test

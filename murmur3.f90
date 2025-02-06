@@ -7,7 +7,13 @@ interface murmur3
   procedure murmur3_i32
   procedure murmur3_i64
   procedure murmur3_r32
+  procedure murmur3_r32_2d
+  procedure murmur3_r32_3d
+  procedure murmur3_r32_4d
   procedure murmur3_r64
+  procedure murmur3_r64_2d
+  procedure murmur3_r64_3d
+  procedure murmur3_r64_4d
 end interface murmur3
 
 contains
@@ -57,6 +63,17 @@ function murmur3_i32(key, seed) result(hash)
 end function murmur3_i32
 
 
+function murmur3_i64(key, seed) result(hash)
+  integer(int64), intent(in) :: key(:)
+  integer(int32), intent(in), optional :: seed
+  integer(int32) :: hash
+
+  integer(int32) :: ikey(2*size(key))
+
+  hash = murmur3(transfer(key, ikey), seed=seed)
+end function murmur3_i64
+
+
 function murmur3_r32(key, seed) result(hash)
   real(real32), intent(in) :: key(:)
   integer(int32), intent(in), optional :: seed
@@ -68,25 +85,80 @@ function murmur3_r32(key, seed) result(hash)
 end function murmur3_r32
 
 
+function murmur3_r32_2d(key, seed) result(hash)
+  real(real32), intent(in) :: key(:,:)
+  integer(int32), intent(in), optional :: seed
+  integer(int32) :: hash
+
+  integer(int32) :: ikey(size(key))
+
+  hash = murmur3(transfer(key, ikey), seed=seed)
+end function murmur3_r32_2d
+
+
+function murmur3_r32_3d(key, seed) result(hash)
+  real(real32), intent(in) :: key(:,:,:)
+  integer(int32), intent(in), optional :: seed
+  integer(int32) :: hash
+
+  integer(int32) :: ikey(size(key))
+
+  hash = murmur3(transfer(key, ikey), seed=seed)
+end function murmur3_r32_3d
+
+
+function murmur3_r32_4d(key, seed) result(hash)
+  real(real32), intent(in) :: key(:,:,:,:)
+  integer(int32), intent(in), optional :: seed
+  integer(int32) :: hash
+
+  integer(int32) :: ikey(size(key))
+
+  hash = murmur3(transfer(key, ikey), seed=seed)
+end function murmur3_r32_4d
+
+
 function murmur3_r64(key, seed) result(hash)
   real(real64), intent(in) :: key(:)
   integer(int32), intent(in), optional :: seed
   integer(int32) :: hash
 
-  integer(int32) :: ikey(2 * size(key))
+  integer(int32) :: ikey(2*size(key))
 
   hash = murmur3(transfer(key, ikey), seed=seed)
 end function murmur3_r64
 
 
-function murmur3_i64(key, seed) result(hash)
-  integer(int64), intent(in) :: key(:)
+function murmur3_r64_2d(key, seed) result(hash)
+  real(real64), intent(in) :: key(:,:)
   integer(int32), intent(in), optional :: seed
   integer(int32) :: hash
 
-  integer(int32) :: ikey(2 * size(key))
+  integer(int32) :: ikey(2*size(key))
 
   hash = murmur3(transfer(key, ikey), seed=seed)
-end function murmur3_i64
+end function murmur3_r64_2d
+
+
+function murmur3_r64_3d(key, seed) result(hash)
+  real(real64), intent(in) :: key(:,:,:)
+  integer(int32), intent(in), optional :: seed
+  integer(int32) :: hash
+
+  integer(int32) :: ikey(2*size(key))
+
+  hash = murmur3(transfer(key, ikey), seed=seed)
+end function murmur3_r64_3d
+
+
+function murmur3_r64_4d(key, seed) result(hash)
+  real(real64), intent(in) :: key(:,:,:,:)
+  integer(int32), intent(in), optional :: seed
+  integer(int32) :: hash
+
+  integer(int32) :: ikey(2*size(key))
+
+  hash = murmur3(transfer(key, ikey), seed=seed)
+end function murmur3_r64_4d
 
 end module murmur

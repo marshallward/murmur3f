@@ -55,11 +55,11 @@ function murmur3_i32(key, seed) result(hash)
 
   hash = ieor(hash, 4*size(key))
 
-  hash = ieor(hash, shiftr(hash, 16))
+  hash = ieor(hash, ishft(hash, -16))
   hash = hash * c4
-  hash = ieor(hash, shiftr(hash, 13))
+  hash = ieor(hash, ishft(hash, -13))
   hash = hash * c5
-  hash = ieor(hash, shiftr(hash, 16))
+  hash = ieor(hash, ishft(hash, -16))
 end function murmur3_i32
 
 

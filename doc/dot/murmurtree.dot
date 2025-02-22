@@ -1,0 +1,33 @@
+digraph murmurtree {
+    rankdir = TB
+    //bgcolor = transparent
+    nodesep = 0.1
+    ranksep = 1.
+    node [
+        shape = box
+        style = filled
+        height = 0.
+        width = 0.
+        fillcolor = white
+        fontname = helvetica
+    ]
+    //edge [
+    //    color = white
+    //]
+
+    {0, 1, 2, 3} -> b0
+    {4, 5, 6, 7} -> b1
+    {8, 9, 10, 11} -> b2
+    {12, 13, 14, 15} -> b3
+
+    {b0, b1, b2, b3} -> hash
+
+    // Fix the LR order with invisible edges
+    // (Fixing b nodes also fixes the a nodes)
+    {
+        rank = same
+        edge [style=invis]
+        b0 -> b1 -> b2 -> b3
+        rankdir = LR
+    }
+}
